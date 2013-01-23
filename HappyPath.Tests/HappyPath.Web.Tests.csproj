@@ -106,6 +106,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HappyPath.Service\HappyPath.Service.csproj">
+      <Project>{776aadd0-ebc2-42a9-a278-a1094ba37247}</Project>
+      <Name>HappyPath.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HappyPath\HappyPath.Web.csproj">
       <Project>{0243C229-6D8F-4374-9FAD-FCCCBABF2E55}</Project>
       <Name>HappyPath.Web</Name>
