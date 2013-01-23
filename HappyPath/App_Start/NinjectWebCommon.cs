@@ -13,6 +13,10 @@ namespace HappyPath.App_Start
     using System.Web.Http;
     using HappyPath.App_Start.Infrustructure;
     using Ninject.Extensions.Conventions;
+    using AutoMapper;
+    using HappyPath.Service.Data.Context;
+using System.Collections.Generic;
+    using HappyPath.Service.Maps;
 
     public static class NinjectWebCommon 
     {
@@ -68,6 +72,13 @@ namespace HappyPath.App_Start
                 .SelectAllClasses()
                 .BindAllInterfaces()
             );
-        }        
+
+            kernel.Rebind<IMappingEngine>().ToMethod(x => Mapper.Engine);
+
+            kernel.Rebind<IHappyPathSession>().To<HappyPathSession>()
+                .InRequestScope();
+
+            AutoMapperConfiguration.Configure(kernel);
+        }
     }
 }

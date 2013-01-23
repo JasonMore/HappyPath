@@ -1,4 +1,7 @@
-﻿using HappyPath.Service.ViewModels;
+﻿using AutoMapper;
+using HappyPath.Service.Data.Context;
+using HappyPath.Service.Models;
+using HappyPath.Service.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,22 +12,29 @@ namespace HappyPath.Service.Services
 {
     public interface IPersonService
     {
-        PersonViewModel GetPersonByName(string name);
+        IEnumerable<PersonViewModel> GetPeopleByName(string name);
     }
 
     public class PersonService : IPersonService
     {
-        public PersonViewModel GetPersonByName(string name)
-        {
-            //TODO: Entity framework code first
+        readonly IHappyPathSession _session;
+        readonly IMappingEngine _mapper;
 
-            return new PersonViewModel
-            {
-                Id = 1,
-                FirstName = "Jason",
-                LastName = "More",
-                Birthday = DateTime.Parse("1/1/2012")
-            };
+        public PersonService(IHappyPathSession session, IMappingEngine mapper)
+        {
+            _session = session;
+            _mapper = mapper;
+        }
+
+        public IEnumerable<PersonViewModel> GetPeopleByName(string name)
+        {
+            name = name.ToUpper();
+
+            var people = _session.All<Person>()
+                .Where(x => x.FirstName.ToUpper().Contains(name)
+                        || x.LastName.ToUpper().Contains(name));
+
+            return _mapper.Map<IEnumerable<PersonViewModel>>(people);
         }
     }
 }

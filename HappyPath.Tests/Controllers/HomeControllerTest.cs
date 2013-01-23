@@ -29,8 +29,10 @@ namespace HappyPath.Tests.Controllers
         public void Index()
         {
             // Arrange
-            _personService.GetPersonByName("Jason")
-                .Returns(new PersonViewModel { FirstName = "Jason", LastName = "More" });
+            _personService.GetPeopleByName("Jason")
+                .Returns(new List<PersonViewModel> { 
+                    new PersonViewModel { FirstName = "Jason", LastName = "More" } 
+                });
 
             // Act
             ViewResult result = _homeController.Index() as ViewResult;

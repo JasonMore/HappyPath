@@ -17,7 +17,7 @@ namespace HappyPath.Controllers
 
         public ActionResult Index()
         {
-            var person = _personService.GetPersonByName("Jason");
+            var person = _personService.GetPeopleByName("Jason").First();
 
             ViewBag.Message = String.Format("Person: {0} {1}", person.FirstName, person.LastName);
 
